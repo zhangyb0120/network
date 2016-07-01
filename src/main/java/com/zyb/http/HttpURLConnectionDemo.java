@@ -16,7 +16,7 @@ public class HttpURLConnectionDemo
     {
 
         //发送 POST 请求
-        String url = "http://121.40.73.86:3335/yggManager/seller/jsonSellerCode";
+        String url = "http://127.0.0.1:8080/yggManager/seller/jsonSellerCode";
         String data = "isBirdex=1&q=笨鸟";
         Map<String, String> headers = new HashMap<>();
         headers.put("Accept", "*/*");
@@ -26,7 +26,7 @@ public class HttpURLConnectionDemo
         System.out.println("返回结果：" + result);
 
         //发送 POST 请求
-//        String url = "http://121.40.73.86:3335/yggManager/seller/jsonSellerCode";
+//        String url = "http://127.0.0.1:8080/yggManager/seller/jsonSellerCode";
 //        String data = "isBirdex=1&q=笨鸟";
 //        Map<String, String> headers = new HashMap<>();
 //        headers.put("Accept", "*/*");
