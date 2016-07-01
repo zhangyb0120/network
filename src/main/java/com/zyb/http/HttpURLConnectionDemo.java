@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/7/1 0001.
@@ -29,7 +30,7 @@ public class HttpURLConnectionDemo
         
         // Post 请求不能使用缓存
         httpUrlConnection.setUseCaches(false);
-
+        
         // 与springMVC注解配合  http://blog.csdn.net/kobejayandy/article/details/12690161
         httpUrlConnection.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
         
@@ -54,19 +55,19 @@ public class HttpURLConnectionDemo
         
         // *********  HttpURLConnection写数据与发送数据 *******************************************************************************************
         // 现在通过输出流对象构建对象输出流对象，以实现输出可序列化的对象。   
-//        ObjectOutputStream objOutputStrm = new ObjectOutputStream(outStrm);
+        //        ObjectOutputStream objOutputStrm = new ObjectOutputStream(outStrm);
         
         // 向对象输出流写出数据，这些数据将存到内存缓冲区中   
         String data = "isBirdex=1&q=笨鸟";
-//        objOutputStrm.writeObject(data);
+        //        objOutputStrm.writeObject(data);
         outStrm.write(data.getBytes());
         
         // 刷新对象输出流，将任何字节都写入潜在的流中（些处为ObjectOutputStream）   
-//        objOutputStrm.flush();
+        //        objOutputStrm.flush();
         outStrm.flush();
         
         // 关闭流对象。此时，不能再向对象输出流写入任何数据，先前写入的数据存在于内存缓冲区中,在调用下边的getInputStream()函数时才把准备好的http请求正式发送到服务器
-//        objOutputStrm.close();
+        //        objOutputStrm.close();
         outStrm.close();
         
         // 调用HttpURLConnection连接对象的getInputStream()函数, 将内存缓冲区中封装好的完整的HTTP请求电文发送到服务端。
@@ -98,5 +99,32 @@ public class HttpURLConnectionDemo
             result += line;
         }
         System.out.println("返回结果:" + result);
+    }
+    
+    public static String sendPost(String reqUrl, Map<String, String> params, Map<String, String> headers)
+        throws IOException
+    {
+//        for (String key : headers.keySet()) {
+//            conn.setRequestProperty(key, headers.get(key));
+//        }
+
+        URL url = new URL(reqUrl);
+
+        // 此处的urlConnection对象实际上是根据URL的请求协议(此处是http)生成的URLConnection类的子类HttpURLConnection,故此处最好将其转化为HttpURLConnection类型的对象,
+        // 以便用到HttpURLConnection更多的API.如下:
+        HttpURLConnection httpUrlConnection = (HttpURLConnection)url.openConnection();
+
+        // 设置是否向httpUrlConnection输出，因为这个是post请求，参数要放在http正文内，因此需要设为true, 默认情况下是false;
+        httpUrlConnection.setDoOutput(true);
+        // 设置是否从httpUrlConnection读入，默认情况下是true;
+        httpUrlConnection.setDoInput(true);
+        // Post 请求不能使用缓存
+        httpUrlConnection.setUseCaches(false);
+        // 与springMVC注解配合  http://blog.csdn.net/kobejayandy/article/details/12690161
+        httpUrlConnection.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
+
+
+        StringBuffer buffer = new StringBuffer();
+        return null;
     }
 }
